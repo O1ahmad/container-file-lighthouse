@@ -8,7 +8,7 @@ Container File ⛵ 🔗 Lighthouse
 [![Docker Pulls](https://img.shields.io/docker/pulls/0labs/lighthouse?style=flat)](https://hub.docker.com/repository/docker/0labs/lighthouse)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
-an Ethereum 2.0 client, written in Rust and maintained by Sigma Prime
+Configure and operate Lighthouse: an Ethereum 2.0 client, written in Rust and maintained by Sigma Prime.
 
 **Overview**
   - [Setup](#setup)
