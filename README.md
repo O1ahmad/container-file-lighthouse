@@ -1,14 +1,14 @@
 <p><img src="https://avatars1.githubusercontent.com/u/12563465?s=200&v=4" alt="OCI logo" title="oci" align="left" height="70" /></p>
-<p><img src="https://i.imgur.com/IBNz2CM.jpg" alt="0xO1 logo" title="0xO1" align="right" height="80" /></p>
+<p><img src="https://miro.medium.com/max/300/1*76dYSeZfdwypV1bzlwPivg.gif" alt="Lighthouse logo" title="lighthouse" align="right" height="80" /></p>
 
-Container File :zero::one: Demo
+Container File ⛵ 🔗 Lighthouse
 =========
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/container-file-template?color=yellow)
-[![0x0I](https://circleci.com/gh/0x0I/container-file-demo.svg?style=svg)](https://circleci.com/gh/0x0I/container-file-demo)
-[![Docker Pulls](https://img.shields.io/docker/pulls/0labs/demo?style=flat)](https://hub.docker.com/repository/docker/0labs/demo)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/container-file-lighthouse?color=yellow)
+[![0x0I](https://circleci.com/gh/0x0I/container-file-lighthouse.svg?style=svg)](https://circleci.com/gh/0x0I/container-file-lighthouse)
+[![Docker Pulls](https://img.shields.io/docker/pulls/0labs/lighthouse?style=flat)](https://hub.docker.com/repository/docker/0labs/lighthouse)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
-...description of the application or service...
+an Ethereum 2.0 client, written in Rust and maintained by Sigma Prime
 
 **Overview**
   - [Setup](#setup)
