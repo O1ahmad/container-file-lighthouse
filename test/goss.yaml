@@ -22,5 +22,7 @@ command:
     exit-status: 0
   lighthouse validator_client --help:
     exit-status: 0
+  lighthouse-helper --help:
+    exit-status: 0
   eth2deposit --help:
     exit-status: 0
