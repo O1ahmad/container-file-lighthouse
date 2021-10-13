@@ -18,7 +18,6 @@ if [[ "$SETUP_DEPOSIT_CLI" = "true" ]]; then
         eth2deposit new-mnemonic --mnemonic_language=${DEPOSIT_MNEMONIC_LANG:-english} --num_validators=${DEPOSIT_NUM_VALIDATORS:-1} \
         --folder=${DEPOSIT_DIR:-/var/tmp/deposit} --chain=${ETH2_CHAIN:-mainnet} --keystore_password=${DEPOSIT_KEY_PASSWORD:-passw0rd}
 
-        # Allow time for key creation
         echo "Deposit key creation complete!"
     fi
 fi
