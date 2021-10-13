@@ -23,11 +23,9 @@ def status():
 # Commands for application configuration customization and inspection
 ###
 
-DEFAULT_PRYSM_DATADIR = "/root/.lighthouse"
-
 DEFAULT_API_HOST_ADDR = 'http://localhost:5052'
 DEFAULT_API_METHOD = 'GET'
-DEFAULT_API_PATH = 'eth/v1/node/version'
+DEFAULT_API_PATH = 'lighthouse/syncing'
 DEFAULT_API_DATA = '{}'
 
 

@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  ethereum:
+
+services:
+  lighthouse-beacon:
+    image: ${image:-0labs/lighthouse:latest}
+    container_name: lighthouse-beacon
+    command:
+      - "lighthouse"
+      - "beacon_node"
+    environment:
+      EXTRA_ARGS:
+    env_file:
+      - ${beacon_env_vars:-.beacon.env}
+    ports:
+      - ${p2p_tcp_port:-9000}:9000/tcp
+      - ${p2p_udp_port:-9000}:9000/udp
+      - ${beacon_api_port:-5052}:5052/tcp
+      - ${beacon_metrics_port:-5054}:5054/tcp
+    volumes:
+      - "${host_data_dir:-/var/tmp/lighthouse}:${DATADIR:-/root/.lighthouse}"
+    networks:
+      - ethereum
+    restart: ${restart_policy:-unless-stopped}
+
+  lighthouse-validator:
+    image: ${image:-0labs/lighthouse:latest}
+    container_name: lighthouse-validator
+    command:
+      - "lighthouse"
+      - "validator_client"
+    environment:
+      EXTRA_ARGS:
+    env_file:
+      - ${validator_env_vars:-.validator.env}
+    ports:
+      - ${validator_api_port:-5062}:5062/tcp
+      - ${validator_metrics_port:-5064}:5064/tcp
+    volumes:
+      - "${host_data_dir:-/var/tmp/lighthouse}:${DATADIR:-/root/.lighthouse}"
+      - "${host_wallet_dir:-/var/tmp/lighthouse/wallets}:/wallets"
+      - "${host_keys_dir:-/var/tmp/lighthouse/keys}:/keys"
+    networks:
+      - ethereum
+    restart: ${restart_policy:-unless-stopped}
