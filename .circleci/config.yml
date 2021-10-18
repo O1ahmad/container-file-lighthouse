@@ -1,22 +1,21 @@
 version: 2.1
 jobs:
    build:
-      machine: true
+      machine:
+          enabled: true
+          image: ubuntu-2004:202107-02
       environment:
          DOCKER_BUILDKIT: 1
          COMPOSE_DOCKER_CLI_BUILD: 1
       steps:
          - checkout
-         - run: |
-               sudo bash -c 'echo "{\"experimental\": true}" > /etc/docker/daemon.json'
-               sudo service docker restart
          - run:
               name: docker build complete image
-              command: DOCKER_BUILDKIT=1 docker build --build-arg build_type=package --tag 0labs/lighthouse:build-v2.0.0 --build-arg lighthouse_version=v2.0.0 .
+              command: build_type=package make build
 
          - run:
               name: docker build and --target test
-              command: make test
+              command: build_type=package make test
 
          - run:
               name: login to Dockerhub for release
@@ -24,4 +23,4 @@ jobs:
 
          - run:
               name: push image version to Dockerhub
-              command: make release
+              command: build_type=package make release

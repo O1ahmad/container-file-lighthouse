@@ -1,7 +1,7 @@
 ARG build_version="rust:1.55-slim-buster"
 ARG build_type="source"
 
-# ******* Stage: builder ******* #
+# ******* Stage: source builder ******* #
 FROM ${build_version} as builder-source
 
 ENV RUST_BACKTRACE 1
@@ -23,13 +23,16 @@ RUN cd lighthouse && make
 RUN mkdir /tmp/bin && cp /usr/local/cargo/bin/lighthouse /tmp/bin
 WORKDIR /tmp/lighthouse
 
+# ----- Stage: package install -----
 FROM ubuntu:21.04 as builder-package
 
 ARG lighthouse_version=v2.0.0
 
 RUN apt update && apt install --yes --no-install-recommends curl ca-certificates
 
-RUN mkdir /tmp/bin && curl -L https://github.com/sigp/lighthouse/releases/download/${lighthouse_version}/lighthouse-${lighthouse_version}-x86_64-unknown-linux-gnu.tar.gz | tar xzf - -C /tmp/bin
+RUN mkdir /tmp/bin && \
+  curl -L https://github.com/sigp/lighthouse/releases/download/${lighthouse_version}/lighthouse-${lighthouse_version}-x86_64-unknown-linux-gnu.tar.gz | \
+  tar xzf - -C /tmp/bin
 
 FROM builder-${build_type} as build-condition
 

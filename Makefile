@@ -2,15 +2,16 @@ filepath        :=      $(PWD)
 versionfile     :=      $(filepath)/version.txt
 version         :=      $(shell cat $(versionfile))
 image_repo      :=      0labs/lighthouse
+build_type      ?=      package
 
 build:
-	docker build --tag $(image_repo):build-$(version) --build-arg lighthouse_version=$(version) .
+	DOCKER_BUILDKIT=1 docker build --tag $(image_repo):build-$(version) --build-arg build_type=$(build_type) --build-arg lighthouse_version=$(version) .
 
 test:
-	docker build --target test --build-arg lighthouse_version=$(version) --tag lighthouse:test . && docker run --env-file test/test.env lighthouse:test
+	DOCKER_BUILDKIT=1 docker build --tag lighthouse:test --target test --build-arg build_type=$(build_type) --build-arg lighthouse_version=$(version) . && docker run --env-file test/test.env lighthouse:test
 
 release:
-	docker build --target release --tag $(image_repo):$(version) --build-arg lighthouse_version=$(version) .
+	DOCKER_BUILDKIT=1 docker build --tag $(image_repo):$(version) --target release --build-arg build_type=$(build_type) --build-arg lighthouse_version=$(version) .
 	docker push $(image_repo):$(version)
 
 latest:

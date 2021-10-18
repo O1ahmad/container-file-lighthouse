@@ -3,8 +3,6 @@ file:
   /usr/local/bin/lighthouse:
     exists: true
     mode: "0755"
-    owner: root
-    group: root
     filetype: file
   /usr/local/bin/eth2deposit:
     exists: true
