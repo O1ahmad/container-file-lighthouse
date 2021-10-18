@@ -2,18 +2,17 @@ version: 2.1
 jobs:
    build:
       machine: true
+      environment:
+         DOCKER_BUILDKIT: 1
+         COMPOSE_DOCKER_CLI_BUILD: 1
       steps:
          - checkout
-         - setup_remote_docker:
-             version: 20.10.7
          - run: |
-               ssh remote-docker \<<EOF
-                    sudo bash -c 'echo "{\"experimental\": true}" > /etc/docker/daemon.json'
-                    sudo systemctl restart docker
-               EOF
+               sudo bash -c 'echo "{\"experimental\": true}" > /etc/docker/daemon.json'
+               sudo service docker restart
          - run:
               name: docker build complete image
-              command: DOCKER_BUILDKIT=1 docker build --build-arg build_type=package --tag $(image_repo):build-$(version) --build-arg lighthouse_version=$(version) .
+              command: DOCKER_BUILDKIT=1 docker build --build-arg build_type=package --tag 0labs/lighthouse:build-v2.0.0 --build-arg lighthouse_version=v2.0.0 .
 
          - run:
               name: docker build and --target test
