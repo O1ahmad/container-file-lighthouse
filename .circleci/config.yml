@@ -4,9 +4,16 @@ jobs:
       machine: true
       steps:
          - checkout
+         - setup_remote_docker:
+             version: 20.10.7
+         - run: |
+               ssh remote-docker \<<EOF
+                    sudo bash -c 'echo "{\"experimental\": true}" > /etc/docker/daemon.json'
+                    sudo systemctl restart docker
+               EOF
          - run:
               name: docker build complete image
-              command: make build
+              command: DOCKER_BUILDKIT=1 docker build --build-arg build_type=package --tag $(image_repo):build-$(version) --build-arg lighthouse_version=$(version) .
 
          - run:
               name: docker build and --target test

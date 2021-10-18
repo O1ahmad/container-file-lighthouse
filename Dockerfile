@@ -1,7 +1,8 @@
 ARG build_version="rust:1.55-slim-buster"
+ARG build_type="source"
 
 # ******* Stage: builder ******* #
-FROM ${build_version} as builder
+FROM ${build_version} as builder-source
 
 ENV RUST_BACKTRACE 1
 
@@ -19,7 +20,14 @@ WORKDIR /tmp
 RUN git clone  --depth 1 --branch ${lighthouse_version} https://github.com/sigp/lighthouse.git
 RUN cd lighthouse && make
 
+RUN mkdir /tmp/bin && cp /usr/local/cargo/bin/lighthouse /tmp/bin
 WORKDIR /tmp/lighthouse
+
+FROM ${build_version} as builder-package
+
+RUN mkdir /tmp/bin && curl -L https://github.com/sigp/lighthouse/releases/download/${lighthouse_version}/lighthouse-${lighthouse_version}-x86_64-unknown-linux-gnu.tar.gz | tar xzf - --strip-components=1 -C /tmp/bin
+
+FROM builder-${build_type} as build-condition
 
 # ******* Stage: base ******* #
 FROM ubuntu:21.04 as base
@@ -57,7 +65,7 @@ RUN curl -fsSL https://goss.rocks/install | GOSS_VER=${goss_version} GOSS_DST=/u
 WORKDIR /test
 
 COPY test /test
-COPY --from=builder /usr/local/cargo/bin/lighthouse /usr/local/bin/
+COPY --from=build-condition /tmp/bin/lighthouse /usr/local/bin/
 
 CMD ["goss", "--gossfile", "/test/goss.yaml", "validate"]
 
@@ -74,7 +82,7 @@ LABEL 01labs.image.authors="zer0ne.io.x@gmail.com" \
 	01labs.image.documentation="https://github.com/0x0I/container-file-lighthouse/blob/${version}/README.md" \
 	01labs.image.version="${version}"
 
-COPY --from=builder /usr/local/cargo/bin/lighthouse /usr/local/bin/
+COPY --from=build-condition /tmp/bin/lighthouse /usr/local/bin/
 
 # beacon-chain node default ports
 #
