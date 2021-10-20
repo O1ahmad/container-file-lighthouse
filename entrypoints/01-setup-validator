@@ -14,5 +14,5 @@ if [[ "$SETUP_VALIDATOR" = "true" ]]; then
         keydir="/keys"
     fi
 
-    lighthouse account validator import --directory=$keydir --network="${ETH2_CHAIN:-prater}" --password-file=/tmp/keystore-password
+    lighthouse account validator import --directory=$keydir --network="${ETH2_CHAIN:-prater}" --password-file=/tmp/keystore-password --reuse-password
 fi
