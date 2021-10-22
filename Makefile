@@ -12,7 +12,7 @@ test:
 
 test-compose-beacon:
 	cd compose && docker-compose config && docker-compose up -d lighthouse-beacon && \
-	sleep 15 && docker-compose logs 2>&1 | grep "Configured for network" && \
+	sleep 30 && docker-compose logs 2>&1 | grep "Configured for network" && \
 	docker-compose logs 2>&1 | grep "prater" && \
 	docker-compose logs 2>&1 | grep "Block production enabled" && \
 	docker-compose logs 2>&1 | grep "HTTP API started" && \
@@ -20,7 +20,7 @@ test-compose-beacon:
 
 test-compose-validator:
 	cd compose && docker-compose config && docker-compose up -d && \
-	sleep 15 && docker-compose logs lighthouse-validator 2>&1 | grep "Configured for network" && \
+	sleep 30 && docker-compose logs lighthouse-validator 2>&1 | grep "Configured for network" && \
 	docker-compose logs lighthouse-validator 2>&1 | grep "prater" && \
 	docker-compose logs lighthouse-validator 2>&1 | grep "Metrics HTTP server started" && \
 	docker-compose logs lighthouse-validator 2>&1 | grep "Connected to beacon node" && \
