@@ -10,8 +10,6 @@ services:
     command:
       - "lighthouse"
       - "beacon_node"
-    environment:
-      EXTRA_ARGS:
     env_file:
       - ${beacon_env_vars:-.beacon.env}
     ports:
@@ -31,8 +29,6 @@ services:
     command:
       - "lighthouse"
       - "validator_client"
-    environment:
-      EXTRA_ARGS:
     env_file:
       - ${validator_env_vars:-.validator.env}
     ports:
