@@ -13,7 +13,7 @@ test:
 test-compose-beacon:
 	echo "image=${image_repo}:${version}" > compose/.env-test
 	cd compose && docker-compose --env-file .env-test config && docker-compose --env-file .env-test up -d lighthouse-beacon && \
-	sleep 60 && docker-compose logs 2>&1 | grep "Configured for network" && \
+	sleep 30 && docker-compose logs 2>&1 | grep "Configured for network" && \
 	docker-compose logs 2>&1 | grep "prater" && \
 	docker-compose logs 2>&1 | grep "Block production enabled" && \
 	docker-compose logs 2>&1 | grep "HTTP API started" && \
