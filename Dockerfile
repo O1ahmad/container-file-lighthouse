@@ -24,7 +24,7 @@ RUN mkdir /tmp/bin && cp /usr/local/cargo/bin/lighthouse /tmp/bin
 WORKDIR /tmp/lighthouse
 
 # ----- Stage: package install -----
-FROM ubuntu:21.04 as builder-package
+FROM ubuntu:20.04 as builder-package
 
 ARG lighthouse_version=v2.0.0
 
@@ -37,13 +37,13 @@ RUN mkdir /tmp/bin && \
 FROM builder-${build_type} as build-condition
 
 # ******* Stage: base ******* #
-FROM ubuntu:21.04 as base
+FROM ubuntu:20.04 as base
 
 RUN apt update && apt install --yes --no-install-recommends \
     ca-certificates \
     cron \
     curl \
-    pip \
+    python3-pip \
     tini \
   # apt cleanup
 	&& apt-get autoremove -y; \
@@ -58,7 +58,7 @@ COPY scripts/entrypoint.sh /usr/local/bin/lighthouse-entrypoint
 COPY scripts/lighthouse-helper.py /usr/local/bin/lighthouse-helper
 RUN chmod 775 /usr/local/bin/lighthouse-helper
 
-RUN pip install click requests
+RUN pip3 install click requests
 
 ENTRYPOINT ["lighthouse-entrypoint"]
 
