@@ -24,7 +24,7 @@ RUN mkdir /tmp/bin && cp /usr/local/cargo/bin/lighthouse /tmp/bin
 WORKDIR /tmp/lighthouse
 
 # ----- Stage: package install -----
-FROM ubuntu:20.04 as builder-package
+FROM ubuntu:26.04 as builder-package
 
 ARG lighthouse_version=v2.0.0
 
@@ -37,7 +37,7 @@ RUN mkdir /tmp/bin && \
 FROM builder-${build_type} as build-condition
 
 # ******* Stage: base ******* #
-FROM ubuntu:20.04 as base
+FROM ubuntu:26.04 as base
 
 RUN apt update && apt install --yes --no-install-recommends \
     ca-certificates \
